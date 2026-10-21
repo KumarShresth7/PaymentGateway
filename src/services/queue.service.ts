@@ -64,14 +64,13 @@ export class QueueService {
         return null;
     }
 
-    static async enqueueTransactions(params:{
-        merchantId:string,
-        orderId:string,
-        amount:number,
-        customerPhone?:string,
+    static async enqueueTransaction(params: {
+        merchantId: string;
+        orderId: string;
+        amount: number;
+        customerPhone?: string;
     }) {
-        const {merchantId, orderId, amount, customerPhone} = params;
-        await this.reconcileQueue(merchantId);
+        const { merchantId, orderId, amount, customerPhone } = params;
         await this.reconcileQueue(merchantId);
 
         const activeSession = await prisma.transaction.findFirst({
@@ -111,7 +110,10 @@ export class QueueService {
         });
 
         return transaction;
+    }
 
+    static async enqueueTransactions(params: Parameters<typeof QueueService.enqueueTransaction>[0]) {
+        return this.enqueueTransaction(params);
     }
 
     static async refreshQueuePositions(merchantId: string) {
