@@ -55,7 +55,7 @@ router.post('/init', async (req: Request, res: Response) => {
   }
 });
 
-// 2. Real-time SSE stream for the checkout modal
+// 2. Real-time SSE stream for the checkout moda
 router.get('/stream/:transactionId', async (req: Request<{ transactionId: string }>, res: Response) => {
   const { transactionId } = req.params;
 
